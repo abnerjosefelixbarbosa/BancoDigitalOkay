@@ -6,12 +6,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.backend.interfaces.DataSourceConfiguration;
+import br.com.backend.interfaces.ConfiguracaoFonteDados;
 
 @SpringBootApplication
 public class BackendApplication implements ApplicationRunner {
 	@Autowired
-	private DataSourceConfiguration dataSourceConfiguration;
+	private ConfiguracaoFonteDados configuracaoFonteDados;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -19,6 +19,6 @@ public class BackendApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		dataSourceConfiguration.setup();
+		configuracaoFonteDados.cofigurar();
 	}
 }
