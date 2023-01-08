@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import Conta from '../../model/Conta';
 import './Login.css';
+import { IMaskInput } from 'react-imask';
 
 const Login = () => {
     const [agencia, setAgencia] = useState(String);
     const [conta, setConta] = useState(String);
     const [senha, setSenha] = useState(String);
-    //11514
-    //2335204
+    //1151-4
+    //233520-4
     //489958
 
     const login = (e: any) => {
@@ -27,13 +28,13 @@ const Login = () => {
         }
 
         urlLogin(data)
-        .then((response) => {
-            if (response === '') {
-                abrirAlerta('conta inexistente!');
-            } else {
-                console.log(response);
-            }
-        });
+            .then((response) => {
+                if (response === '') {
+                    abrirAlerta('conta inexistente!');
+                } else {
+                    console.log(response);
+                }
+            });
     }
 
     const validarLogin = (conta: Conta) => {
@@ -53,14 +54,14 @@ const Login = () => {
     const urlLogin = async (conta: Conta) => {
         const url = `http://localhost:8080/conta/login/${conta.agencia}/${conta.conta}/${conta.senha}`;
         const resposta = await axios.get(url)
-            .then((response) => {                
+            .then((response) => {
                 return response.data;
             })
             .catch((error) => {
                 return error.response.data
             });
 
-        return resposta; 
+        return resposta;
     }
 
     const fecharAlerta = () => {
@@ -81,14 +82,15 @@ const Login = () => {
         <div className="Login">
             <Container className='container-login'>
                 <div className="alert alert-danger d-none" id='alerta' role="alert">
-                    <div id='menssagem'>                        
+                    <div id='menssagem'>
                     </div>
                 </div>
                 <Form onSubmit={login}>
                     <Form.Group className="mb-3">
                         <Form.Label>Agência:</Form.Label>
                         <Form.Control
-                            type="text"
+                            as={IMaskInput}
+                            mask="0000-0"
                             value={agencia}
                             onChange={(e) => setAgencia(e.target.value)}
                         />
@@ -96,7 +98,8 @@ const Login = () => {
                     <Form.Group className="mb-3">
                         <Form.Label>Conta:</Form.Label>
                         <Form.Control
-                            type="text"
+                            as={IMaskInput}
+                            mask="000000-0"
                             value={conta}
                             onChange={(e) => setConta(e.target.value)}
                         />
@@ -104,7 +107,8 @@ const Login = () => {
                     <Form.Group className="mb-3">
                         <Form.Label>Senha:</Form.Label>
                         <Form.Control
-                            type="password"
+                            as={IMaskInput}
+                            mask="000000"
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
                         />

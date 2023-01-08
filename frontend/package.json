@@ -9,12 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-input-mask": "^3.0.2",
     "axios": "^1.2.2",
     "axis": "^1.0.0",
     "bootstrap": "^5.2.3",
+    "jquery-ui": "^1.13.2",
+    "jquery-ui-dist": "^1.13.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-imask": "^6.4.3",
+    "react-input-mask": "^2.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
