@@ -4,7 +4,7 @@ interface Conta {
     id?: number;
     agencia?: String;
 	conta?: String;
-	senha?: String;
+	codigo?: String;
 	saldo?: number;
 	cliente?: Cliente;
 }

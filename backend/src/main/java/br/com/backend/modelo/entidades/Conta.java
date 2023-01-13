@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 		indexes = { 
 				@Index(columnList = "agencia"),
 				@Index(columnList = "conta"),
-				@Index(columnList = "senha"),
+				@Index(columnList = "codigo"),
 		}
 )
 public class Conta implements Serializable {
@@ -33,14 +33,14 @@ public class Conta implements Serializable {
 	private String agencia;
 	@Column(nullable = false, unique = true, length = 10)
 	private String conta;
-	@Column(nullable = false, unique = true, length = 6)
-	private String senha;
+	@Column(nullable = false, unique = true, length = 4)
+	private String codigo;
 	@Column(nullable = false, precision = 10)
 	private Double saldo;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_cliente", referencedColumnName = "id")
 	private Cliente cliente;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -65,12 +65,12 @@ public class Conta implements Serializable {
 		this.conta = conta;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public Double getSaldo() {
@@ -108,7 +108,7 @@ public class Conta implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Conta [id=" + id + ", agencia=" + agencia + ", conta=" + conta + ", senha=" + senha + ", saldo=" + saldo
-				+ ", cliente=" + cliente + "]";
+		return "Conta [id=" + id + ", agencia=" + agencia + ", conta=" + conta + ", codigo=" + codigo + ", saldo="
+				+ saldo + ", cliente=" + cliente + "]";
 	}
 }

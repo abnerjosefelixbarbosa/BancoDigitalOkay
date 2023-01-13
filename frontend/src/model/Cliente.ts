@@ -12,6 +12,7 @@ interface Cliente {
     bairro?: String;
     cidade?: String;
     estado?: String;
+    codigoAplicativo?: String;
 }
 
 export default Cliente;

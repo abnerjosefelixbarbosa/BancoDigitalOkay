@@ -4,35 +4,40 @@ import { Button, Container, Form } from 'react-bootstrap';
 import Conta from '../../model/Conta';
 import './Login.css';
 import { IMaskInput } from 'react-imask';
+import Cliente from '../../model/Cliente';
+import RepositorioConta from '../../repository/RepositorioConta';
 
 const Login = () => {
     const [agencia, setAgencia] = useState(String);
     const [conta, setConta] = useState(String);
-    const [senha, setSenha] = useState(String);
-    //
-    //1151-4
-    //233520-4
-    //489958
-    //
-    //5336-5
-    //55793-5
-    //445595
+    const [codigoAplicativo, setCodigoAplicativo] = useState(String);
 
     const login = (e: any) => {
         e.preventDefault();
-        const data: Conta = {
+        const cliente1: Cliente = {
+            codigoAplicativo: codigoAplicativo,
+        }
+        const conta1: Conta = {
             agencia: agencia,
             conta: conta,
-            senha: senha,
+            cliente: cliente1,
         };
 
-        const vl = validarLogin(data);
+        const vl = validarLogin(conta1);
 
-        if (vl !== "") {
+        if (vl !== "")
             abrirAlerta(vl);
-        }
+        else
+            repositorioConta(conta1)
+                .then((valor) => {
+                    if (valor.length === 0)
+                        abrirAlerta("Conta inexistente");
+                    else
+                        console.log(valor[0]);
+                });
 
-        urlLogin(data)
+        /*
+        urlLogin(conta1)
             .then((response) => {
                 if (response === '') {
                     abrirAlerta('conta inexistente!');
@@ -40,47 +45,44 @@ const Login = () => {
                     console.log(response);
                 }
             });
+            */
     }
 
     const validarLogin = (conta: Conta) => {
-        if (conta.agencia == "") {
+        if (conta.agencia == "")
             return "agencia vazia!";
-        }
-        if (conta.conta == "") {
+        if (conta.conta == "")
             return "conta vazia!";
-        }
-        if (conta.senha == "") {
-            return "senha vazia!";
-        }
+        if (conta.cliente?.codigoAplicativo == "")
+            return "codigo do aplicativo vazia!";
 
         return "";
     }
 
-    const urlLogin = async (conta: Conta) => {
-        const url = `http://localhost:8080/conta/login/${conta.agencia}/${conta.conta}/${conta.senha}`;
-        const resposta = await axios.get(url)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error.response.data
-            });
+    const repositorioConta = async (conta: Conta) => RepositorioConta
+        .filter((valor) =>
+            valor.agencia === conta.agencia &&
+            valor.conta === conta.conta &&
+            valor.cliente?.codigoAplicativo === conta.cliente?.codigoAplicativo
+        );
 
-        return resposta;
-    }
 
-    const fecharAlerta = () => {
-        document.getElementById("alerta")?.classList.add("d-none");
-    }
+    const urlLogin = async (conta: Conta) => await axios
+        .get(`http://localhost:8080/conta/login/${conta.agencia}/${conta.conta}/${conta.codigo}`)
+        .then((response) => response.data)
+        .catch((error) => error.response.data);
+
+
+    const fecharAlerta = () => document
+        .getElementById("alerta")?.classList.add("d-none");
+
 
     const abrirAlerta = (menssagem: String) => {
         document.getElementById("alerta")?.classList.remove("d-none");
-        const m: any = document.getElementById("menssagem");
-        m.innerHTML = menssagem;
+        const mens: any = document.getElementById("menssagem");
+        mens.innerHTML = menssagem;
 
-        setTimeout(() => {
-            fecharAlerta();
-        }, 1500);
+        setTimeout(() => fecharAlerta(), 1500);
     }
 
     return (
@@ -110,12 +112,12 @@ const Login = () => {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Senha:</Form.Label>
+                        <Form.Label>Código do aplicativo:</Form.Label>
                         <Form.Control
                             as={IMaskInput}
                             mask="000000"
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
+                            value={codigoAplicativo}
+                            onChange={(e) => setCodigoAplicativo(e.target.value)}
                         />
                     </Form.Group>
                     <div className="d-grid gap-2">

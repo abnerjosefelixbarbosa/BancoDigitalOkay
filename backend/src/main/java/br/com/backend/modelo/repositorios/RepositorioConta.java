@@ -8,8 +8,8 @@ import br.com.backend.modelo.entidades.Conta;
 
 @Repository
 public interface RepositorioConta extends JpaRepository<Conta, Long> {
-	@Query("SELECT c FROM Conta c WHERE c.agencia = ?1 AND c.conta = ?2 AND c.senha = ?3")
-	Conta login(String agencia, String conta, String senha);
-	Conta findByAgenciaAndContaAndSenha(String agencia, String conta, String senha);
-	Boolean existsByAgenciaAndContaAndSenha(String agencia, String conta, String senha);
+	@Query("SELECT c FROM Conta c WHERE c.agencia = ?1 AND c.conta = ?2 AND c.codigo = ?3")
+	Conta login(String agencia, String conta, String codigo);
+	Conta findByAgenciaAndContaAndCodigo(String agencia, String conta, String codigo);
+	Boolean existsByAgenciaAndContaAndCodigo(String agencia, String conta, String codigo);
 }

@@ -43,6 +43,8 @@ public class Cliente implements Serializable {
 	private String cidade;
 	@Column(nullable = false, length = 2)
 	private String estado;
+	@Column(nullable = false, unique = true, length = 6)
+	private String codigoAplicativo;
 
 	public Long getId() {
 		return id;
@@ -148,6 +150,14 @@ public class Cliente implements Serializable {
 		this.estado = estado;
 	}
 
+	public String getCodigoAplicativo() {
+		return codigoAplicativo;
+	}
+
+	public void setCodigoAplicativo(String codigoAplicativo) {
+		this.codigoAplicativo = codigoAplicativo;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -170,6 +180,6 @@ public class Cliente implements Serializable {
 		return "Cliente [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", email=" + email
 				+ ", cpf=" + cpf + ", rg=" + rg + ", telefone=" + telefone + ", cep=" + cep + ", numero=" + numero
 				+ ", logradouro=" + logradouro + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado
-				+ "]";
+				+ ", codigoAplicativo=" + codigoAplicativo + "]";
 	}
 }
