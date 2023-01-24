@@ -11,7 +11,7 @@ public class ConfiguracaoFonteDadosDesenvolvedor implements ConfiguracaoFonteDad
 
 	@Override
 	public void cofigurar() {
-		System.out.println("configurações de desenvolvimento");		
+		System.out.println("configurações do postgree");		
 	}
 
 }

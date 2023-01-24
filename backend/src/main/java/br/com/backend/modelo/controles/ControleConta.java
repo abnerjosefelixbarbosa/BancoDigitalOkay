@@ -26,15 +26,9 @@ public class ControleConta {
 	@Autowired
 	private OperacoesConta operacoesConta;
 
-	@GetMapping("/login/{agencia}/{conta}/{codigo}")
-	public ResponseEntity<Conta> login(@PathVariable String agencia, @PathVariable String conta, @PathVariable String codigo) {	
-		Conta resultado = operacoesConta.login(agencia, conta, codigo);
-		
-		if (resultado == null) {
-			return ResponseEntity.badRequest().body(resultado);
-		}
-		
-		return ResponseEntity.ok(resultado);
+	@GetMapping("/login/{cpf}/{senhaAplicativo}")
+	public ResponseEntity<Conta> login(@PathVariable String cpf, @PathVariable String senhaAplicativo) {	
+		return ResponseEntity.ok(null);
 	}
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

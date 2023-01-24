@@ -13,11 +13,7 @@ public class ServicoConta implements OperacoesConta {
 	private RepositorioConta repositorioConta;
 
 	@Override
-	public Conta login(String agencia, String conta, String codigo) {
-		if (!repositorioConta.existsByAgenciaAndContaAndCodigo(agencia, conta, codigo)) {
-			return null;
-		}
-		
-		return repositorioConta.findByAgenciaAndContaAndCodigo(agencia, conta, codigo);
+	public Conta login(String cpf, String senhaAplicativo) {
+		return null;
 	}
 }
