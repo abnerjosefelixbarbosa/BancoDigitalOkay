@@ -6,14 +6,17 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "cliente")
+@ToString
+@Table(name = "cliente", indexes = { @Index(columnList = "cpf"), @Index(columnList = "senhaCliente") })
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 

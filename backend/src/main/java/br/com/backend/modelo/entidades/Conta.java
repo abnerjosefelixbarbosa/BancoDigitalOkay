@@ -11,12 +11,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
-//indexes = { @Index(columnList = "agencia"), @Index(columnList = "conta"), @Index(columnList = "senha") }
 @Getter
 @Setter
 @Entity
+@ToString(exclude = {"cliente"})
 @Table(name = "conta")
 public class Conta implements Serializable {
 	private static final long serialVersionUID = 1L;

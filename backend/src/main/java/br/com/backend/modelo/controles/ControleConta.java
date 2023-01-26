@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.backend.interfaces.OperacoesConta;
+import br.com.backend.interfaces.InterfaceConta;
 import br.com.backend.modelo.entidades.Conta;
 
 @RestController
@@ -24,11 +24,11 @@ import br.com.backend.modelo.entidades.Conta;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ControleConta {
 	@Autowired
-	private OperacoesConta operacoesConta;
+	private InterfaceConta interfaceConta;
 
-	@GetMapping("/login/{cpf}/{senhaAplicativo}")
-	public ResponseEntity<Conta> login(@PathVariable String cpf, @PathVariable String senhaAplicativo) {	
-		return ResponseEntity.ok(null);
+	@GetMapping("/login/{cpf}/{senhaCliente}")
+	public ResponseEntity<Conta> logarConta(@PathVariable String cpf, @PathVariable String senhaCliente) {
+		return ResponseEntity.ok(interfaceConta.logarConta(cpf, senhaCliente));
 	}
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

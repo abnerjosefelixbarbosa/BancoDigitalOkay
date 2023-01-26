@@ -10,10 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
+@ToString(exclude = {"cliente"})
 @Table(name = "telefone")
 public class Telefone implements Serializable {
 	private static final long serialVersionUID = 1L;
