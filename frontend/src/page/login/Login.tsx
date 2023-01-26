@@ -5,77 +5,57 @@ import Conta from '../../model/Conta';
 import './Login.css';
 import { IMaskInput } from 'react-imask';
 import Cliente from '../../model/Cliente';
-import RepositorioConta from '../../repository/RepositorioConta';
 
 const Login = () => {
-    const [agencia, setAgencia] = useState(String);
-    const [conta, setConta] = useState(String);
-    const [codigoAplicativo, setCodigoAplicativo] = useState(String);
-
+    const [cpf, setCPF] = useState(String);
+    const [senhaCliente, setSenhaCliente] = useState(String);
+    
     const login = (e: any) => {
         e.preventDefault();
-        const cliente1: Cliente = {
-            codigoAplicativo: codigoAplicativo,
+        const cliente: Cliente = {
+            cpf: cpf,
+            senhaCliente: senhaCliente
         }
-        const conta1: Conta = {
-            agencia: agencia,
-            conta: conta,
-            cliente: cliente1,
+        const conta: Conta = {
+            cliente: cliente
         };
 
-        const vl = validarLogin(conta1);
+        const vl = validarLogin(conta);
+        //949.612.154-30
+        //111111
+        //370.897.974-57
+        //222222
 
-        if (vl !== "")
+        if (vl !== "") {
             abrirAlerta(vl);
-        else
-            repositorioConta(conta1)
-                .then((valor) => {
-                    if (valor.length === 0)
-                        abrirAlerta("Conta inexistente");
-                    else
-                        console.log(valor[0]);
-                });
-
-        /*
-        urlLogin(conta1)
+        } else {
+            logarConta(conta)
             .then((response) => {
                 if (response === '') {
                     abrirAlerta('conta inexistente!');
                 } else {
                     console.log(response);
                 }
-            });
-            */
+            }); 
+        }
     }
 
     const validarLogin = (conta: Conta) => {
-        if (conta.agencia == "")
-            return "agencia vazia!";
-        if (conta.conta == "")
-            return "conta vazia!";
-        if (conta.cliente?.codigoAplicativo == "")
-            return "codigo do aplicativo vazia!";
+        if (conta.cliente?.cpf == "")
+            return "cpf vazio!";
+        if (conta.cliente?.senhaCliente == "")
+            return "senha vazia!";
 
         return "";
     }
 
-    const repositorioConta = async (conta: Conta) => RepositorioConta
-        .filter((valor) =>
-            valor.agencia === conta.agencia &&
-            valor.conta === conta.conta &&
-            valor.cliente?.codigoAplicativo === conta.cliente?.codigoAplicativo
-        );
-
-
-    const urlLogin = async (conta: Conta) => await axios
-        .get(`http://localhost:8080/conta/login/${conta.agencia}/${conta.conta}/${conta.codigo}`)
+    const logarConta = async (conta: Conta) => await axios
+        .get(`http://localhost:8080/conta/login/${conta.cliente?.cpf}/${conta.cliente?.senhaCliente}`)
         .then((response) => response.data)
         .catch((error) => error.response.data);
 
-
     const fecharAlerta = () => document
         .getElementById("alerta")?.classList.add("d-none");
-
 
     const abrirAlerta = (menssagem: String) => {
         document.getElementById("alerta")?.classList.remove("d-none");
@@ -94,30 +74,21 @@ const Login = () => {
                 </div>
                 <Form onSubmit={login}>
                     <Form.Group className="mb-3">
-                        <Form.Label>Agência:</Form.Label>
+                        <Form.Label>CPF:</Form.Label>
                         <Form.Control
                             as={IMaskInput}
-                            mask="0000-0"
-                            value={agencia}
-                            onChange={(e) => setAgencia(e.target.value)}
+                            mask="000.000.000-00"
+                            value={cpf}
+                            onChange={(e) => setCPF(e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Conta:</Form.Label>
-                        <Form.Control
-                            as={IMaskInput}
-                            mask="000000-0"
-                            value={conta}
-                            onChange={(e) => setConta(e.target.value)}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Código do aplicativo:</Form.Label>
+                        <Form.Label>Senha:</Form.Label>
                         <Form.Control
                             as={IMaskInput}
                             mask="000000"
-                            value={codigoAplicativo}
-                            onChange={(e) => setCodigoAplicativo(e.target.value)}
+                            value={senhaCliente}
+                            onChange={(e) => setSenhaCliente(e.target.value)}
                         />
                     </Form.Group>
                     <div className="d-grid gap-2">
