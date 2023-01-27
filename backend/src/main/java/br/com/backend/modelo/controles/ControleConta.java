@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.backend.interfaces.OperacaoConta;
+import br.com.backend.interfaces.MetodoConta;
 import br.com.backend.modelo.entidades.Conta;
 
 @RestController
@@ -24,11 +24,11 @@ import br.com.backend.modelo.entidades.Conta;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ControleConta {
 	@Autowired
-	private OperacaoConta operacaoConta;
+	private MetodoConta metodoConta;
 
 	@GetMapping("/login/{cpf}/{senhaCliente}")
 	public ResponseEntity<Conta> logarConta(@PathVariable String cpf, @PathVariable String senhaCliente) {
-		return ResponseEntity.ok(operacaoConta.logarConta(cpf, senhaCliente));
+		return ResponseEntity.ok(metodoConta.logarConta(cpf, senhaCliente));
 	}
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -42,5 +42,4 @@ public class ControleConta {
         });
         return errors;
     }
-
 }
