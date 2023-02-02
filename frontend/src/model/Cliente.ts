@@ -1,4 +1,4 @@
-interface Cliente {
+export interface Cliente {
     id?: number;
     nome?: String;
     cpf?: String;
@@ -13,5 +13,3 @@ interface Cliente {
     cidade?: String;
     estado?: String;
 }
-
-export default Cliente;

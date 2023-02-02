@@ -1,9 +1,7 @@
-import Cliente from "./Cliente";
+import { Cliente } from "./Cliente";
 
-interface Telefone {
+export interface Telefone {
     id?: number;
     telefone?: String;
     cliente?: Cliente;
 }
-
-export default Telefone;

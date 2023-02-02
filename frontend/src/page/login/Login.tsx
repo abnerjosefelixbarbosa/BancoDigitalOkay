@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import Conta from '../../model/Conta';
+import { Conta } from '../../model/Conta';
 import './Login.css';
 import { IMaskInput } from 'react-imask';
-import Cliente from '../../model/Cliente';
+import { Cliente } from '../../model/Cliente';
+import { ContaService } from '../../service/ContaService';
 
-const Login = () => {
+export const Login = () => {
     const [cpf, setCPF] = useState(String);
     const [senhaCliente, setSenhaCliente] = useState(String);
-    
+
     const login = (e: any) => {
         e.preventDefault();
         const cliente: Cliente = {
@@ -29,33 +30,30 @@ const Login = () => {
         if (vl !== "") {
             abrirAlerta(vl);
         } else {
-            logarConta(conta)
-            .then((response) => {
-                if (response === '') {
-                    abrirAlerta('conta inexistente!');
-                } else {
-                    console.log(response);
-                }
-            }); 
+            // ContaService(conta)
+            //     .logarConta()
+            //     .then((response) => {
+            //         if (response === '') {
+            //             abrirAlerta('conta inexistente!');
+            //         } else {
+            //             console.log(response);
+            //         }
+            //     });
         }
     }
 
     const validarLogin = (conta: Conta) => {
-        if (conta.cliente?.cpf == "")
+        if (conta.cliente?.cpf == "") {
             return "cpf vazio!";
-        if (conta.cliente?.senhaCliente == "")
+        }
+        if (conta.cliente?.senhaCliente == "") {
             return "senha vazia!";
+        }
 
         return "";
     }
 
-    const logarConta = async (conta: Conta) => await axios
-        .get(`http://localhost:8080/conta/login/${conta.cliente?.cpf}/${conta.cliente?.senhaCliente}`)
-        .then((response) => response.data)
-        .catch((error) => error.response.data);
-
-    const fecharAlerta = () => document
-        .getElementById("alerta")?.classList.add("d-none");
+    const fecharAlerta = () => document.getElementById("alerta")?.classList.add("d-none");
 
     const abrirAlerta = (menssagem: String) => {
         document.getElementById("alerta")?.classList.remove("d-none");
@@ -67,7 +65,7 @@ const Login = () => {
 
     return (
         <div className="Login">
-            <Container className='container-login'>
+            <Container className="container-login">
                 <div className="alert alert-danger d-none" id='alerta' role="alert">
                     <div id='menssagem'>
                     </div>
@@ -101,6 +99,4 @@ const Login = () => {
         </div>
     );
 }
-
-export default Login;
 
